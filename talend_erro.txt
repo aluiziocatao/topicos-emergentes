@@ -1,0 +1,31 @@
+ERRO que está ocorrendo: 
+
+Starting job SGCM_ETL_JOB at 20:19 26/07/2022.
+[statistics] connecting to socket on port 3943
+[statistics] connected
+Exception in component tDBInput_4 (SGCM_ETL_JOB)
+java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'DISTINCT a2.data, a2.hora)
+	FROM atendimento a2
+	WHERE a2.paciente_id=a1.paci...' at line 2
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:120)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
+	at com.mysql.cj.jdbc.StatementImpl.executeQuery(StatementImpl.java:1200)
+	at sgcm_etl.sgcm_etl_job_0_1.SGCM_ETL_JOB.tDBInput_4Process(SGCM_ETL_JOB.java:6719)
+	at sgcm_etl.sgcm_etl_job_0_1.SGCM_ETL_JOB.tDBInput_1Process(SGCM_ETL_JOB.java:3353)
+	at sgcm_etl.sgcm_etl_job_0_1.SGCM_ETL_JOB.runJobInTOS(SGCM_ETL_JOB.java:9957)
+	at sgcm_etl.sgcm_etl_job_0_1.SGCM_ETL_JOB.main(SGCM_ETL_JOB.java:9795)
+[statistics] disconnected
+
+Job SGCM_ETL_JOB ended at 20:19 26/07/2022. [Exit code  = 1]
+
+
+Como está a Query AGENDAMENTOS: 
+
+"SELECT a1.id, (
+	SELECT COUNT (DISTINCT a2.data, a2.hora)
+	FROM atendimento a2
+	WHERE a2.paciente_id=a1.paciente_id 
+	AND a2.data < a1.data
+) AS agendamentos
+FROM atendimento a1"
